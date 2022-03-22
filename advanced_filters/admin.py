@@ -19,7 +19,7 @@ class AdvancedListFilters(admin.SimpleListFilter):
     title = _('Advanced filters')
 
     parameter_name = '_afilter'
-
+    
     def lookups(self, request, model_admin):
         if not model_admin:
             raise Exception(
@@ -51,6 +51,12 @@ class AdminAdvancedFiltersMixin:
     """ Generic AdvancedFilters mixin """
     advanced_change_list_template = "admin/advanced_filters.html"
     advanced_filter_form = AdvancedFilterForm
+    
+    """ Names of URLS to use to fetch field contents
+    See url.py and views.py
+    TODO: document more"""
+    advanced_filter_get_field_choices_url_name='afilters_get_field_choices'
+
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -94,6 +100,7 @@ class AdminAdvancedFiltersMixin:
         form = self.advanced_filter_form(data=data, model_admin=self, extra_form=True)
         extra_context.update({
             'original_change_list_template': self.original_change_list_template,
+            'afilters_get_field_choices_url_name': self.advanced_filter_get_field_choices_url_name,
             'advanced_filters': form,
             'current_afilter': request.GET.get('_afilter'),
             'app_label': self.opts.app_label,
