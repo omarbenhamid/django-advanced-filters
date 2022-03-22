@@ -54,7 +54,14 @@ class AdminAdvancedFiltersMixin:
     
     """ Names of URLS to use to fetch field contents
     See url.py and views.py
-    TODO: document more"""
+    This a view that receives two optional parameters :
+    model: the app_label.modelname string
+    field_name: the field which we want to filter
+    
+    Return a json list of {'id': 'The id to use for filtering (the value of the field)?', 'text': 'The text to display'}
+    
+    Can override views.GetFilterFields
+    TODO: imporve documentation"""
     advanced_filter_get_field_choices_url_name='afilters_get_field_choices'
 
 
